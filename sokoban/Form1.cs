@@ -39,6 +39,8 @@ namespace sokoban
         };
 
         static check[] checks;
+
+
  
         public Form1()
         {
@@ -218,9 +220,11 @@ namespace sokoban
                     }
                 }
 
-                
+                /// <summary>
+                ///  verifica las estrellas.
+                /// </summary>
 
-                    label7.Text = movimientos.ToString();
+                label7.Text = movimientos.ToString();
                 
 
                 int strellamitad = movimientosmaximo / 2 +1;
@@ -229,7 +233,7 @@ namespace sokoban
                     e3.Visible = false;
                     strellas = strellas - 1;
                 }
-                if (movimientos == movimientosmaximo)
+                if (movimientos == (movimientosmaximo +1))
                 {
                     e2.Visible = false;
                     strellas = strellas - 1;
@@ -237,6 +241,7 @@ namespace sokoban
 
 
                 iniciartablero();
+
 
                 if (n4[checks[0].posxcheck, checks[0].posycheck] == 2 && n4[checks[1].posxcheck, checks[1].posycheck] == 2 && n4[checks[2].posxcheck, checks[2].posycheck] == 2)
                 {
@@ -249,11 +254,11 @@ namespace sokoban
                     //{
                     //    MessageBox.Show("FIN DEL JUEGO");
                     //}
-                    
+
                     cambionivel();
                     guardar();
                     label8.Text = nivel.ToString();
-                    
+
 
                 }
 
@@ -380,10 +385,12 @@ namespace sokoban
     
         public void cambionivel()
         {
+            
             /// <summary>
             ///  carga los niveles de los juegos
             /// </summary>
             movimientos = 0;
+            
             label7.Text = "";
 
                 string sql;
@@ -409,47 +416,57 @@ namespace sokoban
                 MySqlDataAdapter mysqlda = new MySqlDataAdapter(sql, mysqlconn);
                 mysqlda.Fill(dt);
                 mysqlconn.Close();
+            try
+            {
                 datos = dt.Rows[0][0].ToString();
                 label5.Text = dt.Rows[0][1].ToString();
-            movimientosmaximo = int.Parse(label5.Text);
-           
-            e2.Visible = true;
-            e3.Visible = true;
-            n4 = new int[10, 10];
+
+                movimientosmaximo = int.Parse(label5.Text) * 2;
+
+                e2.Visible = true;
+                e3.Visible = true;
+                n4 = new int[10, 10];
                 int cont = 0;
                 for (int i = 0; i < 10; i++)
                 {
                     for (int j = 0; j < 10; j++)
                     {
-                        string letra = datos.Substring(cont,1);
+                        string letra = datos.Substring(cont, 1);
                         cont = cont + 1;
                         n4[i, j] = int.Parse(letra);
                     }
                 }
-           
 
-            int x = 0;
-            checks = new check[3];
-            for (int i = 0; i < 10; i++)
-            {
-                for (int j = 0; j < 10; j++)
+
+                int x = 0;
+                checks = new check[3];
+                for (int i = 0; i < 10; i++)
                 {
+                    for (int j = 0; j < 10; j++)
+                    {
 
-                    if (n4[i, j] == 1)
-                    {
-                        checks[x].posxcheck = i;
-                        checks[x].posycheck = j;
-                        x++;
-                    }
-                    if (n4[i, j] == 6)
-                    {
-                        posX = i;
-                        posY = j;
+                        if (n4[i, j] == 1)
+                        {
+                            checks[x].posxcheck = i;
+                            checks[x].posycheck = j;
+
+
+                            x++;
+                        }
+                        if (n4[i, j] == 6)
+                        {
+                            posX = i;
+                            posY = j;
+                        }
                     }
                 }
+                iniciartablero();
             }
-            iniciartablero();
-           
+            catch
+            {
+                MessageBox.Show("***Gano todos los niveles***");
+
+            }
         }
        
         public void guardar() {
@@ -541,6 +558,7 @@ namespace sokoban
             textBox2.Enabled = false;
             textBox4.Enabled = false;
             button5.Visible = false;
+            pictureBox1.Visible = false;
             e1.Visible = true;
             e2.Visible = true;
             e3.Visible = true;

@@ -566,37 +566,44 @@ namespace sokoban
             /// <summary>
             ///  guarda los datos del juego
             /// </summary>
-            string sql;
-            string mysqlconexion = "server=mysql3.gear.host;" +
-                "Port=3306;" +
-                "Database=sokoban;" +
-                "Uid=sokoban;" +
-                "Pwd=Ms0F9o19R-!0;";
-            MySqlConnection mysqlconn = new MySqlConnection(mysqlconexion);
-            MySqlCommand mysqlcomm = new MySqlCommand();
-            DataTable dt = new DataTable();
+            try
+            {
+                string sql;
+                string mysqlconexion = "server=mysql3.gear.host;" +
+                    "Port=3306;" +
+                    "Database=sokoban;" +
+                    "Uid=sokoban;" +
+                    "Pwd=Ms0F9o19R-!0;";
+                MySqlConnection mysqlconn = new MySqlConnection(mysqlconexion);
+                MySqlCommand mysqlcomm = new MySqlCommand();
+                DataTable dt = new DataTable();
 
-            sql = "insert into Persona (" +
-                "nombre," +
-                "nivel," +
-                "pasos," +
-                "apodo" +
-                ") values (" +
-                "'" + textBox2.Text + "'," +
-                "'" + 1 + "'," +
-                "'" + 0 + "'," +
-                "'" + textBox4.Text + "'" +")";
+                sql = "insert into Persona (" +
+                    "nombre," +
+                    "nivel," +
+                    "pasos," +
+                    "apodo" +
+                    ") values (" +
+                    "'" + textBox2.Text + "'," +
+                    "'" + 1 + "'," +
+                    "'" + 0 + "'," +
+                    "'" + textBox4.Text + "'" + ")";
 
-            mysqlconn.Open();
-            mysqlcomm.Connection = mysqlconn;
-            mysqlcomm.CommandText = sql;
-            mysqlcomm.CommandType = CommandType.Text;
-            mysqlcomm.ExecuteNonQuery();
+                mysqlconn.Open();
+                mysqlcomm.Connection = mysqlconn;
+                mysqlcomm.CommandText = sql;
+                mysqlcomm.CommandType = CommandType.Text;
+                mysqlcomm.ExecuteNonQuery();
 
-            dataGridView1.DataSource = dt;
+                dataGridView1.DataSource = dt;
 
-            datosusuarios();
+                datosusuarios();
+            }
+            catch (MySqlException)
+            {
+                MessageBox.Show("      Error en guardar los datos");
 
+            }
 
         }
 

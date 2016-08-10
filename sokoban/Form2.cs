@@ -94,42 +94,49 @@ namespace sokoban
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-            string sql;
-            string mysqlconexion = "server=mysql3.gear.host;" +
-                "Port=3306;" +
-                "Database=sokoban;" +
-                "Uid=sokoban;" +
-                "Pwd=Ms0F9o19R-!0;";
-            MySqlConnection mysqlconn = new MySqlConnection(mysqlconexion);
-            MySqlCommand mysqlcomm = new MySqlCommand();
-            DataTable dt = new DataTable();
-            string datos = "";
-            for (int x = 0; x < 10; x++)
+            try
             {
-                for (int j = 0; j < 10; j++)
+                string sql;
+                string mysqlconexion = "server=mysql3.gear.host;" +
+                    "Port=3306;" +
+                    "Database=sokoban;" +
+                    "Uid=sokoban;" +
+                    "Pwd=Ms0F9o19R-!0;";
+                MySqlConnection mysqlconn = new MySqlConnection(mysqlconexion);
+                MySqlCommand mysqlcomm = new MySqlCommand();
+                DataTable dt = new DataTable();
+                string datos = "";
+                for (int x = 0; x < 10; x++)
                 {
-                    datos = datos +  n4[x,j];
-                    
-                }
-            }
-            sql = "insert into niveles (" +
-                "nivel," +
-                "matriz," +
-                "pasos" +
-                ") values (" +
-                "'" + int.Parse(textBox1.Text) + "'," +
-                "'" + datos + "'," +
-                "'" + int.Parse(textBox2.Text) +
-                "'" +")";
-            
-            mysqlconn.Open();
-            mysqlcomm.Connection = mysqlconn;
-            mysqlcomm.CommandText = sql;
-            mysqlcomm.CommandType = CommandType.Text;
-            mysqlcomm.ExecuteNonQuery();
+                    for (int j = 0; j < 10; j++)
+                    {
+                        datos = datos + n4[x, j];
 
-            
+                    }
+                }
+
+                sql = "insert into niveles (" +
+                    "nivel," +
+                    "matriz," +
+                    "pasos" +
+                    ") values (" +
+                    "'" + int.Parse(textBox1.Text) + "'," +
+                    "'" + datos + "'," +
+                    "'" + int.Parse(textBox2.Text) +
+                    "'" + ")";
+
+                mysqlconn.Open();
+                mysqlcomm.Connection = mysqlconn;
+                mysqlcomm.CommandText = sql;
+                mysqlcomm.CommandType = CommandType.Text;
+                mysqlcomm.ExecuteNonQuery();
+
+            }
+            catch (MySqlException)
+            {
+                MessageBox.Show(" Error en guardar los datos");
+
+            }
 
 
         }

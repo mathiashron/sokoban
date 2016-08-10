@@ -1337,11 +1337,11 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(555, 443);
+            this.label3.Location = new System.Drawing.Point(534, 443);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(173, 13);
+            this.label3.Size = new System.Drawing.Size(226, 13);
             this.label3.TabIndex = 210;
-            this.label3.Text = "Minimo y maximo 3 cajas y 3 check";
+            this.label3.Text = "Minimo y maximo 3 cajas , 3 check y 1 jugador";
             // 
             // Form2
             // 
